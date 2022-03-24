@@ -27,7 +27,18 @@ app.get('/',(req,res) => {
 
 //Post Route
 app.post ('/send', (req,res) => {
-    console.log('donnée transmis',req.body)
+    const output = `
+    <p> We have a news contact request </p>
+    <h3> contact detail </h3>
+    <ul>
+        <li> Name: ${req.body.name} </li>
+        <li> company: ${req.body.company} </li>
+        <li> email: ${req.body.email} </li>
+        <li> phone: ${req.body.phone} </li>
+    </ul>
+    <h3> message </h3>
+        <p> ${req.body.message} </p>
+    `;
 });
 
 

@@ -27,6 +27,8 @@ app.get('/',(req,res) => {
 
 //Post Route
 app.post ('/send', (req,res) => {
+    console.log ('parametre passe en req.body',req.body)
+
     const output = `
     <p> We have a news contact request </p>
     <h3> contact detail </h3>
@@ -39,8 +41,31 @@ app.post ('/send', (req,res) => {
     <h3> message </h3>
         <p> ${req.body.message} </p>
     `;
-});
 
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: 'bouget.mathieu69@gmail.com', // generated ethereal user
+      pass: 'LIEBherr38019!', // generated ethereal password
+    },
+  });
+
+  // send mail with defined transport object
+  let info = transporter.sendMail({
+    from: '"HellsTest contact" <bouget.mathieu69@gmail.com', // sender address
+    to: "julieaudelallemand@gmail.com, julieaudelallemand@gmail.com", // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Hello world?", // plain text body
+    html: "<b>Hello world?</b>", // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+});
 
 
 app.listen(8080,()=>{
